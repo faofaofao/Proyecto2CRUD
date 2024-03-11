@@ -26,6 +26,7 @@ h1 {
   color: transparent;
   display: inline-block;
 }
+
 .label-custom {
   background-color: #55555557;
   color: #c7c9b4;
@@ -88,10 +89,9 @@ footer a:hover {
     align-items: center;
   }
 
-  /* Expandir las casillas hacia abajo */
   #tableData {
     display: block;
-    max-height: 200px; /* Establecer una altura máxima para hacer scroll si es necesario */
-    overflow-y: auto; /* Agregar scroll vertical si es necesario */
+    max-height: 200px;
+    overflow-y: auto;
   }
 }
