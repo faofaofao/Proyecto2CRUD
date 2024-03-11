@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="./assets/css/index.css" />
     <title>Crud JavaScript</title>
   </head>
-
   <body>
     <header>
       <div class="container d-flex justify-content-between">
@@ -69,6 +68,18 @@
               placeholder="Número Telefónico"
             />
           </div>
+
+          <div class="mb-3">
+            <label class="form-label label-custom"><b>Dirección</b></label>
+            <input
+              maxlength="50"
+              type="text"
+              class="form-control"
+              id="inputAddress"
+              placeholder="Dirección Domiciliaria"
+            />
+          </div>
+
           <div class="container">
             <button
               type="submit"
@@ -90,9 +101,11 @@
               <th scope="col">Correo</th>
               <th scope="col">Nombre Completo</th>
               <th scope="col">Número de Teléfono</th>
+              <th scope="col">Dirección</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
+          <tbody></tbody>
         </table>
       </div>
     </div>
