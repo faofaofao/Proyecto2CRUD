@@ -6,32 +6,43 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin: 0; /* Elimina el margen predeterminado del body */
 }
 
 header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 20px 20px;
-  padding: 10px 0;
+  padding: 5px;
 }
+
+.logo {
+  width: 200px;
+  height: 150px;
+}
+
 .btn-custom {
   background-color: rgba(207, 194, 161, 0.315);
   color: #926f2dd8;
 }
+
 .btn-custom:hover {
   color: #634903d8;
 }
+
 h1 {
   background: linear-gradient(45deg, #888055, #ccb010);
   background-clip: text;
   color: transparent;
   display: inline-block;
+  margin-top: 0; /* Ajusta el margen superior del h1 según necesites */
 }
 
 .label-custom {
   background-color: #55555557;
   color: #c7c9b4;
   font-weight: bold;
-  padding: 3px 3px;
+  padding: 3px 5px;
   border-radius: 5px;
   font-size: 15px;
 }
@@ -45,6 +56,7 @@ h1 {
   background-color: #8b821d;
   color: #574e31;
 }
+
 #btnUpdate {
   display: none;
 }
@@ -69,7 +81,7 @@ footer a {
 }
 
 footer a:hover {
-  text-decoration: wavy;
+  text-decoration: underline;
   color: rgb(0, 0, 0);
   opacity: 1;
 }
@@ -82,13 +94,19 @@ footer a:hover {
 }
 
 @media (max-width: 550px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
   .container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
   }
-
+  .logo {
+    margin-bottom: 10px;
+  }
   #tableData {
     display: block;
     max-height: 200px;
