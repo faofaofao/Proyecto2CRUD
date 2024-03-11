@@ -1,131 +1,108 @@
 const validarFormulario = () => {
   // obtener los valores
-  let email = document.getElementById("inputEmail").value;
-  let name = document.getElementById("inputName").value;
-  let phone = document.getElementById("inputPhone").value;
-  let address = document.getElementById("inputAddress").value; // nueva línea para obtener la dirección
+  const email = document.getElementById("inputEmail").value;
+  const name = document.getElementById("inputName").value;
+  const phone = document.getElementById("inputPhone").value;
+  const address = document.getElementById("inputAddress").value;
 
   // validar
-  if (email == "") {
+  if (email === "") {
     alert("El correo es obligatorio");
     return false;
   } else if (!email.includes("@")) {
     alert("Correo Inválido");
     return false;
   }
-  if (name == "") {
+  if (name === "") {
     alert("El nombre es obligatorio");
     return false;
   }
-  if (phone == "") {
+  if (phone === "") {
     alert("El teléfono es obligatorio");
     return false;
   }
-  if (address == "") {
-    alert("Direccion es obligatorio");
+  if (address === "") {
+    alert("Dirección es obligatoria");
     return false;
   }
-  // Si pasa todo
+
   return true;
 };
-
+//Agregar valores
 const addData = () => {
-  if (validarFormulario() == true) {
-    // obtener los valores
-    let email = document.getElementById("inputEmail").value;
-    let name = document.getElementById("inputName").value;
-    let phone = document.getElementById("inputPhone").value;
-    let address = document.getElementById("inputAddress").value; // nueva línea para obtener la dirección
+  if (validarFormulario()) {
+    const email = document.getElementById("inputEmail").value;
+    const name = document.getElementById("inputName").value;
+    const phone = document.getElementById("inputPhone").value;
+    const address = document.getElementById("inputAddress").value;
 
-    let listPeople;
-    if (localStorage.getItem("listPeople") == null) {
-      listPeople = [];
-    } else {
-      listPeople = JSON.parse(localStorage.getItem("listPeople"));
-    }
-    listPeople.push({
-      email: email,
-      name: name,
-      phone: phone,
-      address: address, // añadir la dirección al objeto
-    });
+    const listPeople = localStorage.getItem("listPeople")
+      ? JSON.parse(localStorage.getItem("listPeople"))
+      : [];
+    listPeople.push({ email, name, phone, address });
     localStorage.setItem("listPeople", JSON.stringify(listPeople));
     showData();
     document.getElementById("inputEmail").value = "";
     document.getElementById("inputName").value = "";
     document.getElementById("inputPhone").value = "";
-    document.getElementById("inputAddress").value = ""; // limpiar también la dirección
+    document.getElementById("inputAddress").value = "";
   }
 };
-
+//Mostrar valores
 const showData = () => {
-  let listPeople;
-
-  if (localStorage.getItem("listPeople") === null) {
-    listPeople = [];
-  } else {
-    listPeople = JSON.parse(localStorage.getItem("listPeople"));
-  }
-
-  let html = "";
-
-  listPeople.forEach(function (element, index) {
-    html += "<tr>";
-    html += "<td>" + element.email + "</td>";
-    html += "<td>" + element.name + "</td>";
-    html += "<td>" + element.phone + "</td>";
-    html += "<td>" + element.address + "</td>";
-    html +=
-      '<td><button onclick="deleteData(' +
-      index +
-      ')" class="btn btn-danger">Eliminar dato</button> <button onclick="updateData(' +
-      index +
-      ')" class="btn btn-warning">Editar dato</button></td>';
-    html += "</tr>";
-  });
-
+  const listPeople = localStorage.getItem("listPeople")
+    ? JSON.parse(localStorage.getItem("listPeople"))
+    : [];
+  const html = listPeople
+    .map((element, index) => {
+      return `
+      <tr>
+        <td>${element.email}</td>
+        <td>${element.name}</td>
+        <td>${element.phone}</td>
+        <td>${element.address}</td>
+        <td>
+          <button onclick="deleteData(${index})" class="btn btn-danger">Eliminar dato</button>
+          <button onclick="updateData(${index})" class="btn btn-warning">Editar dato</button>
+        </td>
+      </tr>`;
+    })
+    .join("");
   document.querySelector("#tableData tbody").innerHTML = html;
 };
-document.onload = showData();
 
+document.addEventListener("DOMContentLoaded", showData);
+
+//Actualizar valores
 const updateData = (index) => {
-  // Cambiar visibilidad
-  document.getElementById("btnAdd").style.display = "none"; // esconder agregar
+  document.getElementById("btnAdd").style.display = "none";
   document.getElementById("btnUpdate").style.display = "block";
 
-  let listPeople;
-  if (localStorage.getItem("listPeople") == null) {
-    listPeople = [];
-  } else {
-    listPeople = JSON.parse(localStorage.getItem("listPeople"));
-  }
+  const listPeople = localStorage.getItem("listPeople")
+    ? JSON.parse(localStorage.getItem("listPeople"))
+    : [];
 
-  // rellenar los campos
   document.getElementById("inputEmail").value = listPeople[index].email;
   document.getElementById("inputName").value = listPeople[index].name;
   document.getElementById("inputPhone").value = listPeople[index].phone;
-  document.getElementById("inputAddress").value = listPeople[index].address; // rellenar dirección
+  document.getElementById("inputAddress").value = listPeople[index].address;
 
-  // Actualizar datos
-  document.querySelector("#btnUpdate").onclick = function () {
-    if (validarFormulario() == true) {
+  document.querySelector("#btnUpdate").onclick = () => {
+    if (validarFormulario()) {
       listPeople[index].email = document.getElementById("inputEmail").value;
       listPeople[index].name = document.getElementById("inputName").value;
       listPeople[index].phone = document.getElementById("inputPhone").value;
-      listPeople[index].address = document.getElementById("inputAddress").value; // actualizar dirección
+      listPeople[index].address = document.getElementById("inputAddress").value;
 
-      // guardar lista actualizada
       localStorage.setItem("listPeople", JSON.stringify(listPeople));
 
-      // mostrar la data
       showData();
 
       document.getElementById("inputEmail").value = "";
       document.getElementById("inputName").value = "";
       document.getElementById("inputPhone").value = "";
-      document.getElementById("inputAddress").value = ""; // limpiar dirección
+      document.getElementById("inputAddress").value = "";
 
-      // cambiar la visibilidad de los botones
       document.getElementById("btnAdd").style.display = "block";
       document.getElementById("btnUpdate").style.display = "none";
     }
@@ -133,12 +110,9 @@ const updateData = (index) => {
 };
 
 const deleteData = (index) => {
-  let listPeople;
-  if (localStorage.getItem("listPeople") == null) {
-    listPeople = [];
-  } else {
-    listPeople = JSON.parse(localStorage.getItem("listPeople"));
-  }
+  const listPeople = localStorage.getItem("listPeople")
+    ? JSON.parse(localStorage.getItem("listPeople"))
+    : [];
   listPeople.splice(index, 1);
   localStorage.setItem("listPeople", JSON.stringify(listPeople));
   showData();
